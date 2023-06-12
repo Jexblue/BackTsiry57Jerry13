@@ -1,0 +1,1 @@
+mongodb+srv://root:root@cluster0.zeny8.mongodb.net/assignments?retryWrites=true&w=majority
