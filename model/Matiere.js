@@ -5,4 +5,4 @@ var UserSchema = new mongoose.Schema({
   pathProf: String,
 });
 
-module.exports = mongoose.model("Matiere", UserSchema);
+module.exports = mongoose.model("matiere", UserSchema);
