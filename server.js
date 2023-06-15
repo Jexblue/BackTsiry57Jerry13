@@ -2,12 +2,14 @@ let express = require("express");
 let app = express();
 let bodyParser = require("body-parser");
 let assignment = require("./routes/assignments");
+let matiere = require("./routes/matieres");
+let etudiant = require("./routes/etudiants");
 
 let mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
 const { API_PORT } = process.env;
-const port = process.env.PORT || API_PORT;
+// const port = process.env.PORT || API_PORT;
 
 const { MONGO_URI } = process.env;
 
@@ -16,7 +18,9 @@ const { MONGO_URI } = process.env;
 // remplacer toute cette chaine par l'URI de connexion à votre propre base dans le cloud s
 // const uri =
 // "mongodb+srv://root:root@cluster0.zeny8.mongodb.net/assignments?retryWrites=true&w=majority";
-
+const uri =
+  "mongodb+srv://root:root@cluster0.zeny8.mongodb.net/assignments?retryWrites=true&w=majority";
+const port = 8010;
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -26,7 +30,7 @@ const options = {
 mongoose.connect(uri, options).then(
   () => {
     console.log("Connecté à la base MongoDB assignments dans le cloud !");
-    console.log("at URI = " + MONGO_URI);
+    console.log("at URI = " + uri);
     console.log(
       "vérifiez with http://localhost:8010/api/assignments que cela fonctionne"
     );
@@ -64,6 +68,10 @@ app
   .route(prefix + "/assignments/:id")
   .get(assignment.getAssignment)
   .delete(assignment.deleteAssignment);
+
+app.route(prefix + "/matieres").post(matiere.postMatiere);
+
+app.route(prefix + "/etutiants").post(etudiant.postEtudiant);
 
 // On démarre le serveur
 app.listen(port, "0.0.0.0");
