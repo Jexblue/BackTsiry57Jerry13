@@ -1,4 +1,4 @@
-let matiere = require("../model/matiere");
+let matieres = require("../model/matiere");
 
 function postMatiere(req, res) {
   let matiere = new Matiere();

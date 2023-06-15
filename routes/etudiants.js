@@ -1,4 +1,4 @@
-let Etudiant = require("../model/etudiant");
+let etudiant = require("../model/etudiant");
 
 function postEtudiant(req, res) {
   let etudiant = new Etudiant();
