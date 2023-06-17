@@ -5,4 +5,4 @@ var EtudiantSchema = new mongoose.Schema({
   pathPhoto: String,
 });
 
-module.exports = mongoose.model("etudiant", EtudiantSchema);
+module.exports = mongoose.model("etudiants", EtudiantSchema);

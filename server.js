@@ -62,16 +62,25 @@ app
   .route(prefix + "/assignments")
   .get(assignment.getAssignments)
   .post(assignment.postAssignment)
-  .put(assignment.updateAssignment);
+  .put(assignment.updateAssignment)
+  .delete(assignment.deleteAll);
 
 app
   .route(prefix + "/assignments/:id")
   .get(assignment.getAssignment)
   .delete(assignment.deleteAssignment);
 
-app.route(prefix + "/matieres").post(matiere.postMatiere);
+app
+  .route(prefix + "/matieres")
+  .post(matiere.postMatiere)
+  .get(matiere.getMatiereSansPagination)
+  .delete(matiere.deleteAll);
 
-app.route(prefix + "/etutiants").post(etudiant.postEtudiant);
+app
+  .route(prefix + "/etudiants")
+  .post(etudiant.postEtudiant)
+  .get(etudiant.getEtudiantSansPagination)
+  .delete(etudiant.deleteAll);
 
 // On démarre le serveur
 app.listen(port, "0.0.0.0");

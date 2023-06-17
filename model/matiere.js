@@ -5,4 +5,4 @@ var MatiereSchema = new mongoose.Schema({
   pathProf: String,
 });
 
-module.exports = mongoose.model("matiere", MatiereSchema);
+module.exports = mongoose.model("matieres", MatiereSchema);
