@@ -12,24 +12,24 @@ function getAssignmentsSansPagination(req, res) {
   });
 }
 
-function getAssignments(req, res) {
-  var aggregateQuery = Assignment.aggregate();
+// function getAssignments(req, res) {
+//   var aggregateQuery = Assignment.aggregate();
 
-  Assignment.aggregatePaginate(
-    aggregateQuery,
-    {
-      page: parseInt(req.query.page) || 1,
-      limit: parseInt(req.query.limit) || 10,
-      populate: ["auteur", "matiere"],
-    },
-    (err, assignments) => {
-      if (err) {
-        res.send(err);
-      }
-      res.send(assignments);
-    }
-  );
-}
+//   Assignment.aggregatePaginate(
+//     aggregateQuery,
+//     {
+//       page: parseInt(req.query.page) || 1,
+//       limit: parseInt(req.query.limit) || 10,
+//       populate: ["auteur", "matiere"],
+//     },
+//     (err, assignments) => {
+//       if (err) {
+//         res.send(err);
+//       }
+//       res.send(assignments);
+//     }
+//   );
+// }
 
 // Récupérer un assignment par son id (GET)
 // function getAssignment(req, res) {
@@ -52,12 +52,13 @@ function postAssignment(req, res) {
   newassignment.auteur = data.auteur;
   newassignment.matiere = data.matiere;
   newassignment.note = data.note;
+  newassignment.dateLimite = data.dateLimite;
 
   newassignment.save((err) => {
     if (err) {
       res.send("cant post assignment ", err);
     }
-    res.json({ message: `${newassignment.dateDeRendu} saved!` });
+    res.json({ message: `${newassignment.dateLimite} saved!` });
   });
 }
 
@@ -148,6 +149,41 @@ function getAssignments(req, res) {
   );
 }
 
+function getAssignmentRendus(req, res) {
+  var aggregateQuery = Assignment.aggregate();
+  var isRendu = true;
+  if (req.params.isRendu == "false") {
+    isRendu = false;
+  }
+  aggregateQuery.match({ rendu: isRendu });
+  aggregateQuery.lookup({
+    from: "etudiants",
+    localField: "auteur",
+    foreignField: "_id",
+    as: "auteur",
+  });
+
+  aggregateQuery.lookup({
+    from: "matieres",
+    localField: "matiere",
+    foreignField: "_id",
+    as: "matiere",
+  });
+  Assignment.aggregatePaginate(
+    aggregateQuery,
+    {
+      page: parseInt(req.query.page) || 1,
+      limit: parseInt(req.query.limit) || 10,
+    },
+    (err, assignments) => {
+      if (err) {
+        res.send(err);
+      }
+      res.send(assignments);
+    }
+  );
+}
+
 module.exports = {
   getAssignments,
   postAssignment,
@@ -155,4 +191,5 @@ module.exports = {
   updateAssignment,
   deleteAssignment,
   deleteAll,
+  getAssignmentRendus,
 };

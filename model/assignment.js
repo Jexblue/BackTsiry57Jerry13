@@ -4,6 +4,7 @@ var aggregatePaginate = require("mongoose-aggregate-paginate-v2");
 
 let AssignmentSchema = Schema({
   dateDeRendu: Date,
+  dateLimite: Date,
   rendu: Boolean,
   auteur: {
     type: Schema.Types.ObjectId,

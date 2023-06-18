@@ -71,6 +71,10 @@ app
   .delete(assignment.deleteAssignment);
 
 app
+  .route(prefix + "/assignments/rendu/:isRendu")
+  .get(assignment.getAssignmentRendus);
+
+app
   .route(prefix + "/matieres")
   .post(matiere.postMatiere)
   .get(matiere.getMatiereSansPagination)
