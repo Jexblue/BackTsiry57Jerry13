@@ -1,4 +1,3 @@
-const { success } = require("newrelic/lib/collector/response");
 let Matiere = require("../model/matiere");
 
 function postMatiere(req, res) {

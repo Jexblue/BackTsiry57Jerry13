@@ -1,4 +1,3 @@
-const assignment = require("../model/assignment");
 let Assignment = require("../model/assignment");
 
 // Récupérer tous les assignments (GET)
